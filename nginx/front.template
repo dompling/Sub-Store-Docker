@@ -3,34 +3,11 @@ upstream api {
 }
 
 server {
- listen 6080;
+  listen 6080;
 
- set $flag 0;
- set $allow_ip "${ALLOW_IP}";
-
- if ( $allow_ip !~ "^$" ){
-    set $flag "${flag}1";
- }
-
- if ( $remote_addr ~ $allow_ip ){
-   set $flag "${flag}2";
- }
-
-  if ( $remote_addr = 127.0.0.1 ){
-    set $flag "012";
-  }
-
-  if ( $remote_addr = 0.0.0.0 ){
-    set $flag "012";
-  }
-
- if ( $flag = "0" ){
-    return 403;
-  }
-
-  if ( $flag != "012" ){
-     return 404;
-  }
+  ${ALLOW_IP};
+  
+  deny all;
 
   gzip on;
   gzip_static on;
