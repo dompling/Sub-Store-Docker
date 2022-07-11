@@ -23,7 +23,7 @@ echo -e "==============================================================\n"
 echo -e "======================== 3、启动 Sub-Store 界面 ========================\n"
 if [ ! -f "$web/dist/index.html" ]; then
     echo -e "删除自带后端地址，追加配置环境变量配置的后端地址\n"
-    sed -i "/ENV/d" "$web/.env.production"
+    sed -i "/VITE_API_URL/d" "$web/.env.production"
     echo "VITE_API_URL = '${DOMAIN}'" >>"$web/.env.production"
     cd "$web"
     echo -e "执行编译前端静态资源\n"    
