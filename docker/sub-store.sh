@@ -3,10 +3,9 @@
 gitPath="/git"
 rootPath="/Sub-Store"
 backend="$rootPath/backend"
-web="$rootPath/web"
-nginx="$rootPath/nginx"
+web="$rootPath/Front"
 
-ln -sf "$gitPath/docker/sub-update.sh" /usr/bin/sub_update && chmod +x /usr/bin/sub_update
+ln -sf "$gitPath/Docker/docker/sub-update.sh" /usr/bin/sub_update && chmod +x /usr/bin/sub_update
 
 echo -e "======================== 1. 启动nginx ========================\n"
 echo -e "生成 nginx 配置文件\n"
@@ -15,8 +14,6 @@ nginx -s reload 2>/dev/null || nginx -c /etc/nginx/nginx.conf
 echo -e "==============================================================\n"
 
 echo -e "======================== 2、启动后端接口 ========================\n"
-cp -r /git/web "$rootPath"
-cp -r /git/backend "$rootPath"
 
 cd $backend
 pm2 start sub-store.min.js --name "sub-store" --source-map-support --time
@@ -26,8 +23,8 @@ echo -e "==============================================================\n"
 echo -e "======================== 3、启动 Sub-Store 界面 ========================\n"
 if [ ! -f "$web/dist/index.html" ]; then
     echo -e "删除自带后端地址，追加配置环境变量配置的后端地址\n"
-    sed -i "/BACKEND_BASE\|DEBUG\|DOMIAN/d" "$web/src/config.js"
-    echo "export const BACKEND_BASE = '${DOMAIN}';" >>"$web/src/config.js"
+    sed -i "/ENV/d" "$web/.env.production"
+    echo "VITE_API_URL = '${DOMAIN}'" >>"$web/.env.production"
     cd "$web"
     echo -e "执行编译前端静态资源\n"    
     npm run build
