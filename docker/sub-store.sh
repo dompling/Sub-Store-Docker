@@ -27,7 +27,7 @@ if [ ! -f "$web/dist/index.html" ]; then
     echo "VITE_API_URL = '${DOMAIN}'" >>"$web/.env.production"
     cd "$web"
     echo -e "执行编译前端静态资源\n"    
-    npm run build
+    pnpm run build
     echo -e "结束编译，UI 界面已生成\n"
 else
     echo -e "验证结束，UI 界面已生成\n"     
