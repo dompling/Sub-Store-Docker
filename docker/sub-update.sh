@@ -32,8 +32,8 @@ echo -e "======================== 3、重启 UI 界面 ========================\
 cp -r "$gitPath/Front" "$rootPath"
 echo -e "删除自带后端地址，追加配置环境变量配置的后端地址\n"
 
-sed -i "/VITE_API_URL/d" "$web/.env.production"
-echo "VITE_API_URL = '${DOMAIN}'" >>"$web/.env.production"
+sed -i "/VITE_API_URL|ENV/d" "$web/.env.production"
+echo "ENV = 'production'\nVITE_API_URL = '${DOMAIN}'" >>"$web/.env.production"
 
 cd "$web"
 echo -e "执行编译前端静态资源\n"    
