@@ -18,17 +18,8 @@ ln -sf "$gitPath/Docker/docker/sub-update.sh" /usr/bin/sub_update && chmod +x /u
 
 echo -e "==============================================================\n"
 
-echo -e "======================== 2. 重启nginx ========================\n"
 
-cp -r /git/Docker/nginx/front* /etc/nginx/conf.d/ && cp -r /git/Docker/nginx/nginx.conf /etc/nginx/
-
-echo -e "生成 nginx 配置文件\n"
-envsubst '${ALLOW_IP}' < /etc/nginx/conf.d/front.template > /etc/nginx/conf.d/front.conf
-nginx -s reload 2>/dev/null || nginx -c /etc/nginx/nginx.conf
-echo -e "==============================================================\n"
-
-
-echo -e "======================== 3、重启后端接口 ========================\n"
+echo -e "======================== 2、重启后端接口 ========================\n"
 
 cp -r "$gitPath/Sub-Store/backend" "$rootPath"
 cd "$backend" && pnpm install
@@ -36,7 +27,7 @@ pm2 restart sub-store
 
 echo -e "==============================================================\n"
 
-echo -e "======================== 4、重启 UI 界面 ========================\n"
+echo -e "======================== 3、重启 UI 界面 ========================\n"
 
 cp -r "$gitPath/Front" "$rootPath"
 cd "$web" && pnpm install
