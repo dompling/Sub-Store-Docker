@@ -42,7 +42,7 @@ server {
   gzip_http_version 1.0;
 
   location / {
-    root /Sub-Store/web/dist;
+    root /Sub-Store/Front/dist;
     index  index.html index.htm;
     try_files $uri $uri/ /index.html;
   }
