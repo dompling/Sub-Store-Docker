@@ -23,7 +23,7 @@ echo -e "======================== 2、重启后端接口 =======================
 
 cp -r "$gitPath/Sub-Store/backend" "$rootPath"
 cd $backend
-pm2 start sub-store.min.js --name "sub-store" --source-map-support --time
+pm2 start -f sub-store.min.js --name "sub-store" --source-map-support --time
 
 echo -e "==============================================================\n"
 
