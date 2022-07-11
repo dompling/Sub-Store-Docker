@@ -31,7 +31,7 @@ echo -e "==============================================================\n"
 echo -e "======================== 3、重启后端接口 ========================\n"
 
 cp -r "$gitPath/Sub-Store/backend" "$rootPath"
-cd "$gitPath/Sub-Store/backend" && pnpm install
+cd "$backend" && pnpm install
 pm2 restart sub-store
 
 echo -e "==============================================================\n"
