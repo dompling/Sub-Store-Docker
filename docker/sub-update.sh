@@ -29,7 +29,7 @@ echo -e "==============================================================\n"
 
 echo -e "======================== 3、重启 UI 界面 ========================\n"
 
-cp -r /git/web "$rootPath"
+cp -r "$gitPath/Front" "$rootPath"
 echo -e "删除自带后端地址，追加配置环境变量配置的后端地址\n"
 
 sed -i "/VITE_API_URL/d" "$web/.env.production"
