@@ -40,3 +40,5 @@ echo "VITE_API_URL = '${DOMAIN}'" >>"$web/.env.production"
 echo -e "执行编译前端静态资源\n"    
 pnpm run build
 echo -e "结束编译，UI 界面已生成\n"
+
+exit 0
