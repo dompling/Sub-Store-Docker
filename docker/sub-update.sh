@@ -21,7 +21,7 @@ echo -e "======================== 2、启动后端接口 =======================
 
     cp -r "$gitPath/Sub-Store/backend" "$rootPath"
     cd "$backend" && pnpm install
-    pm2 start sub-store.min.js --name "sub-store" --source-map-support --time
+    pm2 restart sub-store
 
 echo -e "==============================================================\n"
 
