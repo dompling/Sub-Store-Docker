@@ -5,24 +5,34 @@ rootPath="/Sub-Store"
 backend="$rootPath/backend"
 web="$rootPath/Front"
 
-ln -sf "$gitPath/Docker/docker/sub-update.sh" /usr/bin/sub_update && chmod +x /usr/bin/sub_update
+echo -e "======================== 1、更 新 仓 库 ========================\n"
 
-echo -e "======================== 1. 启动nginx ========================\n"
-echo -e "生成 nginx 配置文件\n"
-envsubst '${ALLOW_IP}' < /etc/nginx/conf.d/front.template > /etc/nginx/conf.d/front.conf
-nginx -s reload 2>/dev/null || nginx -c /etc/nginx/nginx.conf
-echo -e "==============================================================\n"
-
-echo -e "======================== 2、启动后端接口 ========================\n"
-
-cp -r "$gitPath/Sub-Store/backend" "$rootPath"
-cd "$backend" && pnpm install
-pm2 start sub-store.min.js --name "sub-store" --source-map-support --time
+    cd "$gitPath/Front" && git reset --hard && git pull 
+    sleep 2s
+    cd "$gitPath/Sub-Store" && git reset --hard && git pull
+    sleep 2s
+    cd "$gitPath/Docker" && git reset --hard && git pull
+    sleep 2s
+    ln -sf "$gitPath/Docker/docker/sub-update.sh" /usr/bin/sub_update && chmod +x /usr/bin/sub_update
 
 echo -e "==============================================================\n"
 
-echo -e "======================== 3、启动 Sub-Store 界面 ========================\n"
-if [ ! -f "$web/dist/index.html" ]; then
+echo -e "======================== 2. 启动nginx ========================\n"
+
+    echo -e "生成 nginx 配置文件\n"
+    envsubst '${ALLOW_IP}' < /etc/nginx/conf.d/front.template > /etc/nginx/conf.d/front.conf
+    nginx -s reload 2>/dev/null || nginx -c /etc/nginx/nginx.conf
+    echo -e "==============================================================\n"
+
+echo -e "======================== 3、启动后端接口 ========================\n"
+
+    cp -r "$gitPath/Sub-Store/backend" "$rootPath"
+    cd "$backend" && pnpm install
+    pm2 start sub-store.min.js --name "sub-store" --source-map-support --time
+
+echo -e "==============================================================\n"
+
+echo -e "======================== 4、启动 Sub-Store 界面 ========================\n"
     echo -e "删除自带后端地址，追加配置环境变量配置的后端地址\n"
 
     sed -i "/ENV/d" "$web/.env.production"
@@ -32,9 +42,6 @@ if [ ! -f "$web/dist/index.html" ]; then
     echo -e "执行编译前端静态资源\n"    
     pnpm run build
     echo -e "结束编译，UI 界面已生成\n"
-else
-    echo -e "验证结束，UI 界面已生成\n"     
-fi
 echo -e "==============================================================\n"
 
 pm2 log sub-store
