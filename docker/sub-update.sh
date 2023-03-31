@@ -20,7 +20,7 @@ echo -e "==============================================================\n"
 echo -e "======================== 2、启动后端接口 ========================\n"
 
     cp -r "$gitPath/Sub-Store/backend" "$rootPath"
-    cd "$backend" && pnpm install
+    cd "$backend" && pnpm install && pnpm build
     pm2 restart sub-store
 
 echo -e "==============================================================\n"
