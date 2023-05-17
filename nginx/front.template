@@ -5,8 +5,7 @@ upstream api {
 server {
   listen 6080;
 
-  allow ${ALLOW_IP};
-  deny all;
+  ${ALLOW_IP};
 
   gzip on;
   gzip_static on;
