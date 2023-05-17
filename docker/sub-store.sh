@@ -30,14 +30,14 @@ echo -e "==============================================================\n"
 echo -e "======================== 3、启动后端接口 ========================\n"
 
     cp -r "$gitPath/Sub-Store/backend" "$rootPath"
-    cd "$backend" && pnpm install && pnpm build
+    cd "$backend" && pnpm build
     pm2 start sub-store.min.js --name "sub-store" --source-map-support --time
 
 echo -e "==============================================================\n"
 
 echo -e "======================== 4、启动 Sub-Store 界面 ========================\n"
     cp -r "$gitPath/Front" "$rootPath"
-    cd "$web" && pnpm install
+    cd "$web"
 
     echo -e "删除自带后端地址，追加配置环境变量配置的后端地址\n"
 
